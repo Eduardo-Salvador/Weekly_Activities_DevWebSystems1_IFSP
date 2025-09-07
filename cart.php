@@ -33,6 +33,7 @@ $total = 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
     }
     header h2 {
       margin: 0;
@@ -40,6 +41,7 @@ $total = 0;
     .header-buttons {
       display: flex;
       gap: 10px;
+      flex-wrap: wrap;
     }
     .header-buttons a {
       padding: 10px 16px;
@@ -71,7 +73,7 @@ $total = 0;
       color: #005fa3;
     }
     table {
-      width: 80%;
+      width: 90%;
       margin: 30px auto;
       border-collapse: collapse;
       background: #fff;
@@ -89,6 +91,14 @@ $total = 0;
     }
     tfoot td {
       font-weight: bold;
+    }
+    a.remove-link {
+      color: #cc0000;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    a.remove-link:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -112,10 +122,11 @@ $total = 0;
           <th>Price</th>
           <th>Quantity</th>
           <th>Subtotal</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($_SESSION['cart'] as $item): 
+        <?php foreach ($_SESSION['cart'] as $index => $item): 
           $subtotal = $item['price'] * $item['quantity'];
           $total += $subtotal;
         ?>
@@ -124,13 +135,14 @@ $total = 0;
           <td>$<?php echo number_format($item['price'], 2); ?></td>
           <td><?php echo $item['quantity']; ?></td>
           <td>$<?php echo number_format($subtotal, 2); ?></td>
+          <td><a href="remove.php?index=<?php echo $index; ?>" class="remove-link">Remove</a></td>
         </tr>
         <?php endforeach; ?>
       </tbody>
       <tfoot>
         <tr>
           <td colspan="3">Total</td>
-          <td>$<?php echo number_format($total, 2); ?></td>
+          <td colspan="2">$<?php echo number_format($total, 2); ?></td>
         </tr>
       </tfoot>
     </table>
